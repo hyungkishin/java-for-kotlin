@@ -1,14 +1,13 @@
 package com.group.libraryapp.calculator
 
-fun main() {
-    val calculatorTest = CalculatorTest()
-    calculatorTest.addTest()
-    calculatorTest.minusTest()
-    calculatorTest.multiplyTest()
-}
+import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+
 
 class CalculatorTest {
 
+    @Test
     fun addTest() {
         // Given
         val calculator = Calculator(5)
@@ -17,11 +16,10 @@ class CalculatorTest {
         calculator.add(3)
 
         // Then
-        if (calculator.number != 8) {
-            throw IllegalArgumentException()
-        }
+        assertThat(calculator.number).isEqualTo(8)
     }
 
+    @Test
     fun minusTest() {
         // Given
         val calculator = Calculator(5)
@@ -30,11 +28,10 @@ class CalculatorTest {
         calculator.minus(3)
 
         // Then
-        if (calculator.number != 2) {
-            throw IllegalArgumentException()
-        }
+        assertThat(calculator.number).isEqualTo(2)
     }
 
+    @Test
     fun multiplyTest() {
         // Given
         val calculator = Calculator(5)
@@ -43,9 +40,33 @@ class CalculatorTest {
         calculator.multiply(3)
 
         // Then
-        if (calculator.number != 15) {
-            throw IllegalArgumentException()
+        assertThat(calculator.number).isEqualTo(15)
+    }
+
+    @Test
+    fun divideTest() {
+        // Given
+        val calculator = Calculator(5)
+
+        // When
+        calculator.divide(3)
+
+        // Then
+        assertThat(calculator.number).isEqualTo(1)
+    }
+
+    @Test
+    fun divideExceptionTest() {
+        // given
+        val calculator = Calculator(5)
+
+        // when
+        assertThrows<IllegalArgumentException> {
+            calculator.divide(0)
+        }.apply {
+            assertThat(message).isEqualTo("0으로 나눌 수 없습니다")
         }
+
     }
 
 }
