@@ -46,7 +46,6 @@ class BookServiceTest @Autowired constructor(
     @Test
     @DisplayName("특정 책을 대출한다")
     fun loanBookTest() {
-        // Given
         bookRepository.save(Book("마인드셋"))
         val savedUser = userRepository.save(User("신형기", 33))
         val request = BookLoanRequest("신형기", "마인드셋")
@@ -68,7 +67,6 @@ class BookServiceTest @Autowired constructor(
     @Test
     @DisplayName("이미 대여된 책 대출할 경우 예외가 발생한다")
     fun loanBookExceptionTest() {
-        // Given
         bookRepository.save(Book("마인드셋"))
         val savedUser = userRepository.save(User("신형기", 33))
         userLoanHistoryRepository.save(UserLoanHistory(savedUser, "마인드셋", false))
