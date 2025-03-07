@@ -2,6 +2,7 @@ package com.group.libraryapp.service.book
 
 import com.group.libraryapp.domain.book.Book
 import com.group.libraryapp.domain.book.BookRepository
+import com.group.libraryapp.domain.book.BookType
 import com.group.libraryapp.domain.user.User
 import com.group.libraryapp.domain.user.UserRepository
 import com.group.libraryapp.domain.user.loanhistory.UserLoanHistory
@@ -32,7 +33,7 @@ class BookServiceTest @Autowired constructor(
     @DisplayName("책 이름을 저장한다")
     fun saveBookTest() {
         // Given
-        val request = BookRequest("마인드셋")
+        val request = BookRequest("마인드셋", BookType.COMPUTER)
 
         // When
         bookService.saveBook(request)
@@ -41,12 +42,13 @@ class BookServiceTest @Autowired constructor(
         val books = bookRepository.findAll()
         assertThat(books).hasSize(1)
         assertThat(books[0].name).isEqualTo("마인드셋")
+        assertThat(books[0].type).isEqualTo(BookType.COMPUTER)
     }
 
     @Test
     @DisplayName("특정 책을 대출한다")
     fun loanBookTest() {
-        bookRepository.save(Book("마인드셋"))
+        bookRepository.save(Book.fixture("마인드셋"))
         val savedUser = userRepository.save(User("신형기", 33))
         val request = BookLoanRequest("신형기", "마인드셋")
 
@@ -67,7 +69,7 @@ class BookServiceTest @Autowired constructor(
     @Test
     @DisplayName("이미 대여된 책 대출할 경우 예외가 발생한다")
     fun loanBookExceptionTest() {
-        bookRepository.save(Book("마인드셋"))
+        bookRepository.save(Book.fixture("마인드셋"))
         val savedUser = userRepository.save(User("신형기", 33))
         userLoanHistoryRepository.save(UserLoanHistory(savedUser, "마인드셋", false))
 
