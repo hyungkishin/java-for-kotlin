@@ -23,7 +23,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'com.querydsl:querydsl-jpa'
-    kapt("com.querydsl:querydsl-apt:jpa")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jpa")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
 
